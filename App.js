@@ -4,9 +4,7 @@ import { StackNavigator, TabNavigator } from 'react-navigation'
 
 const MARGIN = 8
 const SCREEN_WIDTH = Dimensions.get('window').width
-const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH_MARGINS = SCREEN_WIDTH - (MARGIN * 2)
-const SCREEN_HEIGHT_MARGINS = SCREEN_HEIGHT - (MARGIN * 2)
 
 class HomeScreen extends React.Component {
   ARTICLE_IMAGE_DIMENSIONS = 1300 / 808
@@ -24,15 +22,19 @@ class HomeScreen extends React.Component {
         <Image source={require('./images/article-text.jpg')} style={{width: SCREEN_WIDTH,
                                                                      height: this.ARTICLE_IMAGE_HEIGHT}} />
 
-        <View style={{flexDirection: 'row', margin: MARGIN}}>
-          <Image source={require('./images/video1.jpg')} style={{flex: 1}} />
-
-          <Image source={require('./images/video2.jpg')} style={{flex: 1}} />
+        <View style={{flex: 1, flexDirection: 'row', padding: MARGIN}}>
+          <View style={{flex: 1, marginRight: MARGIN / 2}}>
+            <Image source={require('./images/video1.jpg')} style={{width: '100%', height: '100%'}} />
+          </View>
+          <View style={{flex: 1, marginLeft: MARGIN / 2}}>
+            <Image source={require('./images/video2.jpg')} style={{width: '100%', height: '100%'}} />
+          </View>
         </View>
 
         <Image source={require('./images/workout.jpg')} style={{width: SCREEN_WIDTH_MARGINS,
                                                                 height: this.WORKOUT_IMAGE_HEIGHT,
-                                                                marginLeft: MARGIN,
+                                                                paddingLeft: MARGIN,
+                                                                paddingRight: MARGIN,
                                                                 marginBottom: MARGIN}} />
       </View>
     )
@@ -44,15 +46,21 @@ const FeaturedNavigator = StackNavigator({
 })
 
 const AppNavigator = TabNavigator({
-  Home: { screen: FeaturedNavigator }
+  Featured: {
+    screen: FeaturedNavigator,
+    navigationOptions: ({navigation}) => ({
+      tabBarIcon: ({ tintColor }) => (
+        <Image source={require('./images/featured.png')} style={{height: 26, width: 26, tintColor: tintColor}} />
+      )
+    }),
+  }
 })
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 
